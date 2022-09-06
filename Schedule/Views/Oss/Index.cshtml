@@ -1,0 +1,564 @@
+﻿
+@{
+    ViewBag.Title = "Oss";
+}
+
+@*<div class="row">
+        <select name="cars" id="cars" class="form-control">
+            <option>RF</option>
+            <option>EME</option>
+            <option>Safety</option>
+            <option>ESS & T</option>
+            <option>OTA</option>
+        </select>
+    </div>
+
+    <hr />*@
+
+<div id='calendar'></div>
+
+<div id="myModalView" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Schedule</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group row mb-2">
+                        <label for="station" class="form-label">Station</label>
+                        <input type="text" class="form-control" id="station" placeholder="Station A" readonly>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="start_date" class="form-label">Start Date</label>
+                        <input type="text" class="form-control" id="start_date" placeholder="21 July 2022" readonly>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="end_date" class="form-label">End Date</label>
+                        <input type="text" class="form-control" id="end_date" placeholder="27 July 2022" readonly>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="update">Update</button>
+                <button type="button" class="btn btn-danger" id="delete">Delete</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModalAdd" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Updated Booking Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group row mb-2">
+                        <label for="station" class="form-label">Station</label>
+                        <input type="text" class="form-control" id="station" placeholder="Station A">
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="start_date" class="form-label">Start Date</label>
+                        <input type="text" class="form-control" id="start_date" placeholder="21 July 2022">
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="end_date" class="form-label">End Date</label>
+                        <input type="text" class="form-control" id="end_date" placeholder="27 July 2022">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-secondary" onclick="btnBack()">Back</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModalUpdate" class="modal fade bd-example-modal-lg" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<h5 class="modal-title">Updated Booking Details</h5>*@
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group row mb-2">
+                        <label for="" class="col-sm-2 col-form-label form-control-sm">SR ID</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="" class="col-sm-2 col-form-label form-control-sm">Child SR ID</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="" class="col-sm-2 col-form-label form-control-sm">Test Purpose</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="" class="col-sm-2 col-form-label form-control-sm">Vintage</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="" class="col-sm-2 col-form-label form-control-sm">Title</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="" class="col-sm-2 col-form-label form-control-sm">Remarks</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="" class="col-sm-2 col-form-label form-control-sm">Station</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="" class="col-sm-2 col-form-label form-control-sm">Technician</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="" class="col-sm-2 col-form-label form-control-sm">Status</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="" class="col-sm-2 col-col-sm-2 col-form-label form-control-sm">Category</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="" class="col-sm-2 col-form-label form-control-sm">Event Color</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="" class="col-sm-2 col-form-label form-control-sm">Color</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="" class="col-sm-2 col-form-label form-control-sm">Number of Days</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="" class="col-sm-2 col-form-label form-control-sm">0.5 Days</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="" class="col-sm-2 col-form-label form-control-sm">Exclude</label>
+                        <div class="col-sm-10">
+                            <div class="d-flex flex-row">
+                                <div class="pe-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" for="">
+                                            Saturday
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="pe-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" for="">
+                                            Sunday
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="pe-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" for="">
+                                            Holiday
+                                        </label>
+                                    </div>
+                                </div>
+                                @*<div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" for="">
+                                            Sunday
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" for="">
+                                            Holiday
+                                        </label>
+                                    </div>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="" class="col-sm-2 col-form-label form-control-sm">Report Release Duration</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="" class="col-sm-2 col-form-label form-control-sm">Note</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="" class="col-sm-2 col-form-label form-control-sm">OT (Hours)</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="" class="col-sm-2 col-form-label form-control-sm">Time Period</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col">
+                                    <input type="date" class="form-control form-control-sm">
+                                </div>
+                                -
+                                <div class="col">
+                                    <input type="date" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*<div class="form-group row mb-2">
+                            <label for="" class="form-label">SR ID</label>
+                            <input type="text" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="form-group row mb-2">
+                            <label for="" class="form-label">Child SR ID</label>
+                            <input type="text" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="form-group row mb-2">
+                            <label for="" class="form-label">Test Purpose</label>
+                            <input type="text" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="form-group row mb-2">
+                            <label for="" class="form-label">Vintage</label>
+                            <input type="text" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="form-group row mb-2">
+                            <label for="" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="form-group row mb-2">
+                            <label for="" class="form-label">Remarks</label>
+                            <input type="text" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="form-group row mb-2">
+                            <label for="" class="form-label">Station</label>
+                            <input type="text" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="form-group row mb-2">
+                            <label for="" class="form-label">Technician</label>
+                            <input type="text" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="form-group row mb-2">
+                            <label for="" class="form-label">Status</label>
+                            <input type="text" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="form-group row mb-2">
+                            <label for="" class="form-label">Category</label>
+                            <input type="text" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="form-group row mb-2">
+                            <label for="" class="form-label">Event Color</label>
+                            <input type="text" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="form-group row mb-2">
+                            <label for="" class="form-label">Color</label>
+                            <input type="text" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="form-group row mb-2">
+                            <label for="" class="form-label">Number of Days</label>
+                            <input type="text" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="form-group row mb-2">
+                            <label for="" class="form-label">0.5 Days</label>
+                            <input type="text" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="form-group row mb-2">
+                            <label for="" class="form-label">Exclude</label>
+                            <input type="text" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="form-group row mb-2">
+                            <label for="" class="form-label">Report Release Duration</label>
+                            <input type="text" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="form-group row mb-2">
+                            <label for="" class="form-label">Note</label>
+                            <input type="text" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="form-group row mb-2">
+                            <label for="" class="form-label">OT (Hours)</label>
+                            <input type="text" class="form-control" id="" placeholder="">
+                        </div>
+                        <div class="form-group row mb-2">
+                            <label for="" class="form-label">Time Period</label>
+                            <input type="text" class="form-control" id="" placeholder="">
+                        </div>*@
+
+                    @*<div class="form-group row mb-2">
+                            <label for="station" class="form-label">Station</label>
+                            <input type="text" class="form-control" id="station" placeholder="Station A">
+                        </div>
+                        <div class="form-group row mb-2">
+                            <label for="start_date" class="form-label">Start Date</label>
+                            <input type="text" class="form-control" id="start_date" placeholder="21 July 2022">
+                        </div>
+                        <div class="form-group row mb-2">
+                            <label for="end_date" class="form-label">End Date</label>
+                            <input type="text" class="form-control" id="end_date" placeholder="27 July 2022">
+                        </div>*@
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-secondary" onclick="btnBack()">Back</button>
+                <button type="button" class="btn btn-danger" onclick="btnDelete()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModalDelete" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Booking Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure to delete?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger">Confirm</button>
+                <button type="button" class="btn btn-secondary" onclick="btnBack()">Back</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.2/main.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.2/main.min.js"></script>
+    <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script>
+
+    <script>
+        //$('#update').click(function () {
+        //    $('#myModalView').modal('hide');
+        //    $('#myModalUpdate').modal('show');
+        //})
+
+        //$('#delete').click(function () {
+        //    $('#myModalView').modal('hide');
+        //    $('#myModalDelete').modal('show');
+        //})
+
+        function btnBack() {
+            $('#myModalUpdate').modal('hide');
+        }
+
+        function btnDelete() {
+            $('#myModalUpdate').modal('hide');
+            $('#myModalDelete').modal('show');
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                //timeZone: 'UTC',
+                //dayHeaders: false,
+                //dayHeaderFormat: { weekday: 'short', month: 'numeric', day: 'numeric', omitCommas: true },
+                resourceAreaWidth: '15%',
+                //displayEventTime: false,
+                slotLabelFormat: [
+                    {
+                        // lower level of text
+                        weekday: 'short',
+                    },
+                    {
+                        // top level of text
+                        day: 'numeric',
+                        month: 'numeric'
+                    },
+                ],
+                slotDuration: '24:00:00',
+                headerToolbar: {
+                    left: 'today prev,next',
+                    center: 'title',
+                    right: 'resourceTimelineMonth,resourceTimelineYear'
+                },
+                initialView: 'resourceTimelineMonth',
+                //scrollTime: '08:00',
+                //aspectRatio: 1.5,
+                //views: {
+                //    resourceTimelineCustomDay: {
+                //        type: 'resourceTimeline',
+                //        duration: { days: 30 },
+                //        buttonText: '30 days',
+                //    },
+                //    //titleFormat: {
+                //    //    year: 'numeric', month: 'long', day: 'numeric', weekday: 'short'
+                //    //},
+                //},
+                //eventContent: { html: '<i>[28201] - STRYKER PORTABLE 6 days</i>' },
+                editable: true,
+                resourceAreaHeaderContent: 'Station',
+                resources: 'https://fullcalendar.io/api/demo-feeds/resources.json?with-nesting&with-colors',
+                events: 'https://fullcalendar.io/api/demo-feeds/events.json?single-day&for-resource-timeline',
+                //events: [
+                //    {
+                //        title: 'BCH237',
+                //        start: '2022-09-12T10:30:00',
+                //        end: '2022-10-12T11:30:00',
+                //        extendedProps: {
+                //            department: 'BioChemistry'
+                //        },
+                //        description: 'Lecture'
+                //    }
+                //],
+                //timeFormat: 'h:mm',
+                eventClick: function () {
+                    $('#myModalUpdate').modal('show');
+                },
+                eventDrop: function (info) {
+                    if (!confirm(info.event.title + " was dropped on " + info.event.start.toISOString() + "Are you sure about this change?")) {
+                        info.revert();
+                    }
+                },
+                eventResize: function (info) {
+                    if (!confirm(info.event.title + " end is now " + info.event.end.toISOString() + "Are you sure about this change?")) {
+                        info.revert();
+                    }
+                },
+                dateClick: function (info) {
+                    //alert(info.dateStr);
+                    $('#myModalUpdate').modal('show');
+                },
+
+                //resourceLabelDidMount: function (info) {
+                //    var tooltip = new Tooltip(info.el, {
+                //        title: info.event.extendedProps.description,
+                //        placement: 'top',
+                //        trigger: 'hover',
+                //        container: 'body'
+                //    });
+                //},
+                //resourceLabelDidMount: function (info) {
+                //    var questionMark = document.createElement('strong');
+                //    questionMark.innerText = ' (?) ';
+
+                //    info.el.querySelector('.fc-datagrid-cell-main')
+                //        .appendChild(questionMark);
+
+                //    var tooltip = new Tooltip(questionMark, {
+                //        title: info.resource.title + '!!!',
+                //        placement: 'top',
+                //        trigger: 'hover',
+                //        container: 'body'
+                //    });
+                //},
+                //eventMouseEnter: function (calEvent, jsEvent) {
+                //    //alert(calEvent.title);
+                //    //var tooltip = '<div class="tooltipevent" style="width:100px;height:100px;background:black;position:absolute;z-index:999;">[28201] - STRYKER PORTABLE 6 days</div>';
+
+                //    var tooltip = '<div class="tooltipevent" style="background:black;position:absolute;z-index:999;">[28201] - STRYKER PORTABLE 6 days</div>';
+                //    var $tooltip = $(tooltip).appendTo('.fc-event-main');
+
+                //    $(this).mouseover(function (e) {
+                //        $(this).css('z-index', 10000);
+                //        $tooltip.fadeIn('500');
+                //        $tooltip.fadeTo('10', 1.9);
+                //    }).mousemove(function (e) {
+                //        $tooltip.css('top', e.pageY + 10);
+                //        $tooltip.css('left', e.pageX + 20);
+                //    });
+                //},
+                //eventMouseLeave: function (calEvent, jsEvent) {
+                //    $(this).css('z-index', 8);
+                //    $('.tooltipevent').remove();
+                //},
+                //eventMouseEnter: function (info) {
+                //    $(".fc-event-main").append("<div>" + info.event.title + "</div>");
+                //},
+                //eventDidMount: function (info) {
+                //    var tooltip = new Tooltip(info.el, {
+                //        title: "X",
+                //        placement: 'top',
+                //        trigger: 'hover',
+                //        container: 'body'
+                //    });
+                //},
+                //eventRender:
+                //    function (event, element, view) {
+                //        element.find('.fc-event-skin').addClass(event.className.join(' '));
+                //    },
+                //timeFormat: {
+                //    month: 'long',
+                //    year: 'numeric',
+                //    day: 'numeric',
+                //    weekday: 'long'
+                //},
+                //titleFormat: { // will produce something like "Tuesday, September 18, 2018"
+                //    month: 'long',
+                //    year: 'numeric',
+                //    day: 'numeric',
+                //    weekday: 'long'
+                //}
+            });
+            calendar.render();
+        });
+    </script>
+}
+
+<style>
+    .fc-slot-sat, .fc-slot-sun {
+        background-color: #D3D3D3;
+    }
+
+    .fc-datagrid-cell {
+        width: 10px;
+    }
+
+    /*    .fc-datagrid-cell {
+
+        }
+
+        .fc-datagrid-cell-cushion {
+            width: 10px;
+        }
+    */
+    /*    .fc-timeline-slot-cushion .fc-scrollgrid-sync-inner .fc-sticky {
+            font-size: 5px;
+        }*/
+</style>

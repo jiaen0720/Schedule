@@ -1,0 +1,62 @@
+﻿:root {
+    --sidebar-width: 256px;
+    --navbar-height: 65px;
+    --color-light: #ffffff;
+    --color-secondary: #a6a6a6;
+    --color-dark: #000000;
+}
+
+img {
+    max-width: 100%;
+}
+
+.offcanvas-body {
+    padding: 10px !important;
+}
+
+.sidebar {
+    width: var(--sidebar-width);
+    top: var(--navbar-height);
+    height: calc(100% - var(--top));
+}
+
+    .sidebar a {
+        color: var(--color-secondary);
+        border-radius: 5px;
+    }
+
+        .sidebar a:hover {
+            color: var(--color-light) !important;
+            background: var(--color-dark);
+            border-radius: 5px;
+        }
+
+        .sidebar a:focus {
+            color: var(--color-secondary) !important;
+        }
+
+        .sidebar a i {
+            font-size: 1.4rem;
+        }
+
+        .sidebar li {
+            margin: 5px 0;
+        }
+
+.sidebar-link[aria-expanded="true"] .right-icon {
+    transform: rotate(180deg);
+    transition: all ease 0.55s;
+}
+
+main {
+    margin-left: var(--sidebar-width);
+    transition: all ease 0.4s;
+}
+
+    main.hide {
+        margin-left: 0;
+        transition: all ease 0.4s;
+    }
+
+@media (min-width: 992px) {
+}

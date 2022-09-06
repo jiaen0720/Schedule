@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <!--navbar-->
+    <nav class="navbar navbar-light bg-light fixed-top shadow-sm">
+        <div class="container-fluid">
+            <div class="navbar-brand">
+                <!--sidebar trigger-->
+                <button class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" id="toggleBtn" aria-controls="offcanvasScrolling"><i class="fa fa-bars" aria-hidden="true"></i></button>
+                <!--sidebar trigger end-->             
+                <img src="~/Content/Motorola-logo-black-and-white.png" height="35">
+            </div>
+        </div>
+    </nav>
+    <!--navbar end-->
+
+    <!--sidebar-->
+    <div class="offcanvas offcanvas-start show sidebar" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+        <div class="offcanvas-body">
+            <ul class="navbar-nav">
+                <li>
+                    <div class="text-muted small fw-bold text-uppercase px-3">
+                        Dashboard
+                    </div>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","Oss")" class="nav-link">
+                        <span class="mx-3">
+                            <i class="fa fa-address-book-o" aria-hidden="true"></i>
+                        </span>
+                        <span class="me-3">
+                            OSS
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","Doc")" class="nav-link">
+                        <span class="mx-3">
+                            <i class="fa fa-address-book-o" aria-hidden="true"></i>
+                        </span>
+                        <span class="me-3">
+                            DOC
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <hr class="dropdown-divider" />
+                </li>
+                <li>
+                    <div class="text-muted small fw-bold text-uppercase px-3">
+                        Management
+                    </div>
+                </li>
+                <li>
+                    <a class="nav-link d-flex bd-highlight sidebar-link" data-bs-toggle="collapse" href="#collapseOSS" role="button" aria-expanded="false" aria-controls="collapseOSS">
+                        <div class="bd-highlight">
+                            <span class="mx-3">
+                                <i class="fa fa-address-book-o" aria-hidden="true"></i>
+                            </span>
+                            <span class="me-3">
+                                OSS
+                            </span>
+                        </div>
+                        <span class="ms-auto bd-highlight me-3">
+                            <i class="fa fa-angle-down right-icon" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                    <div class="collapse" id="collapseOSS">
+                        <ul class="navbar-nav my-2 shadow rounded">
+                            <li>
+                                <a href="@Url.Action("Index3","Oss")" class="nav-link">
+                                    <span class="mx-3">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    </span>
+                                    <span class="me-3">
+                                        Technician
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link">
+                                    <span class="mx-3">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    </span>
+                                    <span class="me-3">
+                                        Station
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link">
+                                    <span class="mx-3">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    </span>
+                                    <span class="me-3">
+                                        Category
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a class="nav-link d-flex bd-highlight sidebar-link" data-bs-toggle="collapse" href="#collapseDOC" role="button" aria-expanded="false" aria-controls="collapseDOC">
+                        <div class="bd-highlight">
+                            <span class="mx-3">
+                                <i class="fa fa-address-book-o" aria-hidden="true"></i>
+                            </span>
+                            <span class="me-3">
+                                DOC
+                            </span>
+                        </div>
+                        <span class="ms-auto bd-highlight me-3">
+                            <i class="fa fa-angle-down right-icon" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                    <div class="collapse" id="collapseDOC">
+                        <ul class="navbar-nav my-2 shadow rounded">
+                            <li>
+                                <a href="#" class="nav-link">
+                                    <span class="mx-3">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    </span>
+                                    <span class="me-3">
+                                        Directives
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link">
+                                    <span class="mx-3">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    </span>
+                                    <span class="me-3">
+                                        Designator Type
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="nav-link">
+                                    <span class="mx-3">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    </span>
+                                    <span class="me-3">
+                                        Technicial Justification
+                                    </span>
+                                </a>
+                            </li>                          
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--sidebar end-->
+
+    <!--main-->
+    <main class="mt-5 pt-5 px-4 main">
+        <div class="container-fluid">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p class="text-center">Copyright &copy; @DateTime.Now.Year - Motorola Solution Sdn. Bhd. &#xae;</p>
+            </footer>
+        </div>
+    </main>
+    <!--main end-->
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+<script>
+    let toggleBtn = document.querySelector("#toggleBtn");
+    let sidebar = document.querySelector(".main");
+
+    toggleBtn.onclick = function () {
+        sidebar.classList.toggle("hide");
+    }
+</script>
