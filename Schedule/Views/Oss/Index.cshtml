@@ -373,6 +373,24 @@
     <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script>
 
     <script>
+        function isContains() {
+            //var isContains = $('#calendar').text().indexOf('some text') > -1;
+
+            //if ($('#calendar').html().includes('12 AM')) {
+            //    console.log('Removed p!');
+            //} else {
+            //    // Do something else
+            //}
+            $(".fc-timeline-slot-cushion.fc-scrollgrid-sync-inner").text(function() {
+                return $(this).text().replace("12 AM", "1").replace("8 AM", "2").replace("4 PM", "3");
+            })
+            //alert($(".fc-timeline-slot-cushion.fc-scrollgrid-sync-inner").text());
+            //    $(".fc-timeline-slot-cushion.fc-scrollgrid-sync-inner").text($(".fc-timeline-slot-cushion.fc-scrollgrid-sync-inner").text().replace("12 AM", "1"));
+            //$(".fc-timeline-slot-cushion.fc-scrollgrid-sync-inner").text().replace("12 AM", "1")
+        }
+
+
+
         //$('#update').click(function () {
         //    $('#myModalView').modal('hide');
         //    $('#myModalUpdate').modal('show');
@@ -403,16 +421,22 @@
                 //displayEventTime: false,
                 slotLabelFormat: [
                     {
-                        // lower level of text
+                        // top level of text
                         weekday: 'short',
                     },
                     {
-                        // top level of text
-                        day: 'numeric',
-                        month: 'numeric'
+                        // lower level of text
+                        //titleFormat: function (date) {
+                        //    return date.toString() + '!!!';
+                        //}
+                        //day: 'numeric',
+                        //month: 'numeric'
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        omitZeroMinute: true,
                     },
                 ],
-                slotDuration: '24:00:00',
+                slotDuration: '8:00:00',
                 headerToolbar: {
                     left: 'today prev,next',
                     center: 'title',
@@ -537,6 +561,7 @@
                 //}
             });
             calendar.render();
+            isContains();
         });
     </script>
 }
