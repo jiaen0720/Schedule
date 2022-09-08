@@ -512,26 +512,26 @@
                 //        container: 'body'
                 //    });
                 //},
-                //eventMouseEnter: function (calEvent, jsEvent) {
-                //    //alert(calEvent.title);
-                //    //var tooltip = '<div class="tooltipevent" style="width:100px;height:100px;background:black;position:absolute;z-index:999;">[28201] - STRYKER PORTABLE 6 days</div>';
+                eventMouseEnter: function (calEvent, jsEvent) {
+                    //alert(calEvent.title);
+                    //var tooltip = '<div class="tooltipevent" style="width:100px;height:100px;background:black;position:absolute;z-index:999;">[28201] - STRYKER PORTABLE 6 days</div>';
 
-                //    var tooltip = '<div class="tooltipevent" style="background:black;position:absolute;z-index:999;">[28201] - STRYKER PORTABLE 6 days</div>';
-                //    var $tooltip = $(tooltip).appendTo('.fc-event-main');
+                    var tooltip = '<div class="tooltipevent" style="background:black;position:absolute;z-index:999;">[28201] - STRYKER PORTABLE 6 days</div>';
+                    var $tooltip = $(tooltip).appendTo('.fc-event-main');
 
-                //    $(this).mouseover(function (e) {
-                //        $(this).css('z-index', 10000);
-                //        $tooltip.fadeIn('500');
-                //        $tooltip.fadeTo('10', 1.9);
-                //    }).mousemove(function (e) {
-                //        $tooltip.css('top', e.pageY + 10);
-                //        $tooltip.css('left', e.pageX + 20);
-                //    });
-                //},
-                //eventMouseLeave: function (calEvent, jsEvent) {
-                //    $(this).css('z-index', 8);
-                //    $('.tooltipevent').remove();
-                //},
+                    $(this).mouseover(function (e) {
+                        $(this).css('z-index', 10000);
+                        $tooltip.fadeIn('500');
+                        $tooltip.fadeTo('10', 1.9);
+                    }).mousemove(function (e) {
+                        $tooltip.css('top', e.pageY + 10);
+                        $tooltip.css('left', e.pageX + 20);
+                    });
+                },
+                eventMouseLeave: function (calEvent, jsEvent) {
+                    $(this).css('z-index', 8);
+                    $('.tooltipevent').remove();
+                },
                 //eventMouseEnter: function (info) {
                 //    $(".fc-event-main").append("<div>" + info.event.title + "</div>");
                 //},
