@@ -77,3 +77,13 @@ C:\Users\Asus\source\repos\Schedule\Schedule\obj\Debug\Schedule.csproj.CoreCompi
 C:\Users\Asus\source\repos\Schedule\Schedule\obj\Debug\Schedule.csproj.CopyComplete
 C:\Users\Asus\source\repos\Schedule\Schedule\obj\Debug\Schedule.dll
 C:\Users\Asus\source\repos\Schedule\Schedule\obj\Debug\Schedule.pdb
+C:\Users\Asus\source\repos\Schedule\Schedule\bin\EntityFramework.dll
+C:\Users\Asus\source\repos\Schedule\Schedule\bin\EntityFramework.SqlServer.dll
+C:\Users\Asus\source\repos\Schedule\Schedule\bin\System.Net.Http.Formatting.dll
+C:\Users\Asus\source\repos\Schedule\Schedule\bin\System.Web.Http.dll
+C:\Users\Asus\source\repos\Schedule\Schedule\bin\System.Web.Http.WebHost.dll
+C:\Users\Asus\source\repos\Schedule\Schedule\bin\EntityFramework.xml
+C:\Users\Asus\source\repos\Schedule\Schedule\bin\EntityFramework.SqlServer.xml
+C:\Users\Asus\source\repos\Schedule\Schedule\bin\System.Net.Http.Formatting.xml
+C:\Users\Asus\source\repos\Schedule\Schedule\bin\System.Web.Http.xml
+C:\Users\Asus\source\repos\Schedule\Schedule\bin\System.Web.Http.WebHost.xml

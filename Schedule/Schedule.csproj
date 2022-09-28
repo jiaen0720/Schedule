@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -25,6 +27,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>4.3</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,16 +48,31 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.9\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.9\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.9\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -120,12 +138,19 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\SchedulerInitializer.cs" />
+    <Compile Include="Context\DBContext.cs" />
     <Compile Include="Controllers\DocController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OssController.cs" />
+    <Compile Include="Controllers\SchedulerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Class1.cs" />
+    <Compile Include="Models\DB.cs" />
+    <Compile Include="Models\SchedulerContext.cs" />
+    <Compile Include="Models\WebAPIEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -145,8 +170,306 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\codebase\dhtmlxscheduler.css" />
+    <Content Include="Content\codebase\dhtmlxscheduler.js" />
+    <Content Include="Content\codebase\dhtmlxscheduler_contrast_black.css" />
+    <Content Include="Content\codebase\dhtmlxscheduler_contrast_white.css" />
+    <Content Include="Content\codebase\dhtmlxscheduler_flat.css" />
+    <Content Include="Content\codebase\dhtmlxscheduler_material.css" />
+    <Content Include="Content\codebase\dhtmlxscheduler_material_nofont.css" />
+    <Content Include="Content\codebase\dhtmlxscheduler_terrace.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\backend\index.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\backend\item_initializer.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\backend\router.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\backend\router_dynamic_loading.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\backend\server.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\backend\storage.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\backend\storage_tree.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\codebase\dhtmlxgantt.css" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\codebase\dhtmlxgantt.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\codebase\skins\dhtmlxgantt_broadway.css" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\codebase\skins\dhtmlxgantt_contrast_black.css" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\codebase\skins\dhtmlxgantt_contrast_white.css" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\codebase\skins\dhtmlxgantt_material.css" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\codebase\skins\dhtmlxgantt_meadow.css" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\codebase\skins\dhtmlxgantt_skyblue.css" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\codebase\skins\dhtmlxgantt_terrace.css" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\codebase\sources\dhtmlxgantt.css" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\codebase\sources\dhtmlxgantt.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\codebase\sources\skins\dhtmlxgantt_broadway.css" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\codebase\sources\skins\dhtmlxgantt_contrast_black.css" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\codebase\sources\skins\dhtmlxgantt_contrast_white.css" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\codebase\sources\skins\dhtmlxgantt_material.css" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\codebase\sources\skins\dhtmlxgantt_meadow.css" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\codebase\sources\skins\dhtmlxgantt_skyblue.css" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\codebase\sources\skins\dhtmlxgantt_terrace.css" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\Gantt-Useful-Info.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\license.txt" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\readme.txt" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\01_initialization\01_basic_init.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\01_initialization\02_load_json.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\01_initialization\03_load_xml.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\01_initialization\04_save_rest.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\01_initialization\06_touch_forced.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\01_initialization\07_jquery.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\01_initialization\08_explicit_time_range.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\01_initialization\09_backward_compatibility.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\01_initialization\10_fixed_size.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\01_initialization\11_clickable_links.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\01_initialization\12_localization.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\01_initialization\13_project_duration.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\01_initialization\14_reinitializtion.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\01_initialization\15_connector_json_enddate.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\01_initialization\16_projects_and_milestones.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\01_initialization\17_bootstrap.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\01_initialization\18_backward_planning.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\01_initialization\19_tasks_without_dates.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\01_initialization\20_tasks_outside_timescale.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\01_initialization\21_rollup_tasks.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\01_initialization\index.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\01_quickinfo.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\02_tooltip.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\03_critical_path.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\04_grid_resize.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\05_today_line.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\06_dynamic_loading.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\07_managing_grid_columns.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\08_tasks_grouping.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\09_multiselection.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\10_tasks_grouping_multilevel.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\11_full_screen.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\12_auto_scheduling.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\13_smart_rendering.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\14_undo.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\16_keyboard_navigation.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\17_keyboard_navigation_cell.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\18_linked_tasks.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\19_constraints_scheduling.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\20_backwards_scheduling.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\21_overlay.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\22_tooltip_api.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\23_click_drag_splittask.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\24_click_drag.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\25_click_drag_select_by_drag.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\26_full_screen_with_additional_elements.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\27_drag_timeline.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\28_row_resize.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\28_tasks_grouping_relation_properties.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\data.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\index.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\03_scales\01_multiple_scales.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\03_scales\02_month_days.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\03_scales\03_full_year.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\03_scales\04_days.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\03_scales\05_dynamic_scales.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\03_scales\06_custom_scales.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\03_scales\07_minutes_scale.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\03_scales\08_scale_autoconfig.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\03_scales\09_skip_weekends.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\03_scales\10_working_hours.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\03_scales\11_select_column.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\03_scales\12_year_quarters.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\03_scales\13_zoom_to_fit.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\03_scales\14_scale_zoom_by_wheelmouse.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\03_scales\index.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\01_outer_content.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\02_custom_tree.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\03_link_styles.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\04_task_styles.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\05_tree_template.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\06_highlight_weekend.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\07_progress_text.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\08_templates.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\09_html_content.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\10_context_menu.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\11_split_task.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\12_custom_task_type.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\13_autosize_container.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\14_deadline.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\15_baselines.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\16_inline_task_colors.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\17_classic_gantt_look.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\18_subtasks_displaying.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\19_task_type.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\20_message_types.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\21_open_split_task.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\22_draw_links_as_svg_images.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\common\deadline_icon.png" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\04_customization\index.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\05_lightbox\01_lightbox_customization.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\05_lightbox\02_checkbox.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\05_lightbox\02_progress_lightbox.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\05_lightbox\02_radio.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\05_lightbox\03_validation.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\05_lightbox\04_custom_editor.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\05_lightbox\05_template.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\05_lightbox\06_custom_button.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\05_lightbox\07_time.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\05_lightbox\08_parent_selector.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\05_lightbox\09_years_selector_range.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\05_lightbox\10_progress_slider.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\05_lightbox\11_datepicker_for_lightbox.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\05_lightbox\12_select.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\05_lightbox\13_resources.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\05_lightbox\14_jquery_multiselect.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\05_lightbox\15_readonly_lightbox.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\05_lightbox\common\v_complete.png" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\05_lightbox\index.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\06_skins\01_default.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\06_skins\02_default_lightbox.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\06_skins\03_skyblue.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\06_skins\04_meadow.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\06_skins\05_broadway.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\06_skins\06_dynamic_skin.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\06_skins\07_high_contrast_black.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\06_skins\08_high_contrast_white.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\06_skins\09_material.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\06_skins\index.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\07_grid\01_builtin_sorting.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\07_grid\02_branch_ordering.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\07_grid\03_filtering.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\07_grid\04_custom_sorting.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\07_grid\05_sort_api.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\07_grid\06_without_grid.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\07_grid\07_custom_buttons.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\07_grid\08_drag_between_levels.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\07_grid\09_wbs_column.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\07_grid\10_scrollable_grid.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\07_grid\11_inline_edit_basic.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\07_grid\12_inline_edit_key_nav.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\07_grid\13_custom_mapping.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\07_grid\14_branch_ordering_highlight.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\07_grid\index.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\01_dnd_events.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\02_constraints.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\03_validation.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\04_limit_project.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\05_limit_drag_dates.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\06_export.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\07_export_styles.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\08_export_other.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\09_export_store.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\10_performance_tweaks.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\11_project_structure.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\12_fit_task_text.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\13_highlight_drag_position.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\14_critical_tasks_expanding.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\15_show_dates_on_drag.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\16_dynamic_progress.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\17_show_task_slack.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\18_load_from_mpp.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\18_load_from_primaverap6.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\19_draggable_projects.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\21_load_from_excel.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\22_data_processor.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\common\excel.png" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\common\ms-project.png" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\08_api\index.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\09_worktime\01_working_hours_per_day.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\09_worktime\02_working_days.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\09_worktime\03_exclude_holidays.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\09_worktime\04_custom_workday_duration.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\09_worktime\05_adjust_to_worktime.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\09_worktime\06_task_calendars.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\09_worktime\07_resource_calendars.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\09_worktime\08_project_calendars.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\09_worktime\09_decimal_durations.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\09_worktime\10_merge_calendars.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\09_worktime\11_working_hours_with_minutes.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\09_worktime\12_calendar_ranges.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\09_worktime\index.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\10_layout\01_rightside_columns.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\10_layout\02_resource_panel.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\10_layout\03_scale_at_bottom.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\10_layout\04_rtl.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\10_layout\data.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\10_layout\index.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\11_resources\01_assigning_resources.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\11_resources\02_resource_calendars.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\11_resources\03_break_down_by_resource.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\11_resources\04_resource_usage_diagram.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\11_resources\05_resource_usage_templates.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\11_resources\06_assign_multiple_owners.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\11_resources\07_assign_multiple_resources.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\11_resources\08_resource_usage_groups.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\11_resources\09_resource_histogram.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\11_resources\10_resource_histogram_workload_percents.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\11_resources\11_resource_histogram_display_tasks.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\11_resources\12_work_and_material_resources.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\11_resources\13_resource_assignments_for_days.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\11_resources\14_resource_load_with_zoom.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\11_resources\common\jquery_multiselect.css" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\11_resources\common\jquery_multiselect.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\11_resources\common\resource_filter.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\11_resources\index.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\20_multiple\01_basic.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\20_multiple\03_layout.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\20_multiple\05_jquery.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\20_multiple\06_export.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\20_multiple\07_keyboard_navigation.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\20_multiple\08_constructor_destructor.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\20_multiple\index.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\constraint-arrow.svg" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\controls_styles.css" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\customstyles.css" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\data.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\data.xml" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\data_baselines.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\data_end_dates.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\data_extra.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\data_large.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\dhxmenu.xml" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\docs.css" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\dump.sql" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\olddata.xml" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\resource_construction_materials.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\resource_project_assignments.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\resource_project_assignments_percents.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\resource_project_construction.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\resource_project_multiple_owners.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\resource_project_single_resource.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\resource_project_single_resource_diagram.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\about.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\about_dis.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\bug_reporting.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\bug_reporting_dis.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\close.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\close_dis.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\copy.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\copy_dis.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\cut.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\cut_dis.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\help.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\help_dis.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\new.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\new_dis.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\open.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\open_dis.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\page_setup.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\page_setup_dis.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\paste.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\paste_dis.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\print.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\print_dis.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\redo.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\redo_dis.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\save.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\save_as.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\save_as_dis.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\save_dis.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\select_all.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\select_all_dis.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\undo.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\sample_images\undo_dis.gif" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\snippets\dhx_file_dnd.css" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\snippets\dhx_file_dnd.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\snippets\multiselect.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\testdata.js" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\index.html" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\readme.txt" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\whatsnew.txt" />
     <Content Include="Content\Motorola-logo-black-and-white.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -185,6 +508,19 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\backend\data-dynamic.json" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\backend\data.json" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\backend\package.json" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\codebase\dhtmlxgantt.js.map" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\package.json" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\02_extensions\data.json" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\10_layout\data.json" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\data.json" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\data_start_end_dates.json" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\DemoProject.mpp" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\DemoProject.xlsx" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\loaddata.json" />
+    <Content Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\samples\common\PROJECT.xer" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -216,21 +552,31 @@
     <Content Include="Views\Oss\Index4.cshtml" />
     <Content Include="Views\Doc\Index.cshtml" />
     <Content Include="Views\Oss\Index5.cshtml" />
+    <Content Include="Views\Oss\Index6.cshtml" />
+    <Content Include="Views\Oss\Index7.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Views\Scheduler\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Content\codebase\dhtmlxscheduler.d.ts" />
+    <TypeScriptCompile Include="Content\gantt_7.1.10_commercial\gantt_7.1.10_commercial\codebase\dhtmlxgantt.d.ts" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
@@ -259,7 +605,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

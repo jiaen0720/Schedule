@@ -81,7 +81,7 @@
 </div>
 
 <div id="myModalUpdate" class="modal fade bd-example-modal-lg" tabindex="-1">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 @*<h5 class="modal-title">Updated Booking Details</h5>*@
@@ -89,6 +89,12 @@
             </div>
             <div class="modal-body">
                 <form>
+                    <div class="form-group row mb-2">
+                        <label for="" class="col-sm-2 col-form-label form-control-sm">OS ID</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="" placeholder="">
+                        </div>
+                    </div>
                     <div class="form-group row mb-2">
                         <label for="" class="col-sm-2 col-form-label form-control-sm">SR ID</label>
                         <div class="col-sm-10">
@@ -202,17 +208,17 @@
                                     </div>
                                 </div>
                                 @*<div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="">
-                                        <label class="form-check-label" for="">
-                                            Sunday
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="">
-                                        <label class="form-check-label" for="">
-                                            Holiday
-                                        </label>
-                                    </div>*@
+                        <input class="form-check-input" type="checkbox" value="" id="">
+                        <label class="form-check-label" for="">
+                            Sunday
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="">
+                        <label class="form-check-label" for="">
+                            Holiday
+                        </label>
+                    </div>*@
                             </div>
                         </div>
                     </div>
@@ -250,99 +256,100 @@
                     </div>
 
                     @*<div class="form-group row mb-2">
-                            <label for="" class="form-label">SR ID</label>
-                            <input type="text" class="form-control" id="" placeholder="">
-                        </div>
-                        <div class="form-group row mb-2">
-                            <label for="" class="form-label">Child SR ID</label>
-                            <input type="text" class="form-control" id="" placeholder="">
-                        </div>
-                        <div class="form-group row mb-2">
-                            <label for="" class="form-label">Test Purpose</label>
-                            <input type="text" class="form-control" id="" placeholder="">
-                        </div>
-                        <div class="form-group row mb-2">
-                            <label for="" class="form-label">Vintage</label>
-                            <input type="text" class="form-control" id="" placeholder="">
-                        </div>
-                        <div class="form-group row mb-2">
-                            <label for="" class="form-label">Title</label>
-                            <input type="text" class="form-control" id="" placeholder="">
-                        </div>
-                        <div class="form-group row mb-2">
-                            <label for="" class="form-label">Remarks</label>
-                            <input type="text" class="form-control" id="" placeholder="">
-                        </div>
-                        <div class="form-group row mb-2">
-                            <label for="" class="form-label">Station</label>
-                            <input type="text" class="form-control" id="" placeholder="">
-                        </div>
-                        <div class="form-group row mb-2">
-                            <label for="" class="form-label">Technician</label>
-                            <input type="text" class="form-control" id="" placeholder="">
-                        </div>
-                        <div class="form-group row mb-2">
-                            <label for="" class="form-label">Status</label>
-                            <input type="text" class="form-control" id="" placeholder="">
-                        </div>
-                        <div class="form-group row mb-2">
-                            <label for="" class="form-label">Category</label>
-                            <input type="text" class="form-control" id="" placeholder="">
-                        </div>
-                        <div class="form-group row mb-2">
-                            <label for="" class="form-label">Event Color</label>
-                            <input type="text" class="form-control" id="" placeholder="">
-                        </div>
-                        <div class="form-group row mb-2">
-                            <label for="" class="form-label">Color</label>
-                            <input type="text" class="form-control" id="" placeholder="">
-                        </div>
-                        <div class="form-group row mb-2">
-                            <label for="" class="form-label">Number of Days</label>
-                            <input type="text" class="form-control" id="" placeholder="">
-                        </div>
-                        <div class="form-group row mb-2">
-                            <label for="" class="form-label">0.5 Days</label>
-                            <input type="text" class="form-control" id="" placeholder="">
-                        </div>
-                        <div class="form-group row mb-2">
-                            <label for="" class="form-label">Exclude</label>
-                            <input type="text" class="form-control" id="" placeholder="">
-                        </div>
-                        <div class="form-group row mb-2">
-                            <label for="" class="form-label">Report Release Duration</label>
-                            <input type="text" class="form-control" id="" placeholder="">
-                        </div>
-                        <div class="form-group row mb-2">
-                            <label for="" class="form-label">Note</label>
-                            <input type="text" class="form-control" id="" placeholder="">
-                        </div>
-                        <div class="form-group row mb-2">
-                            <label for="" class="form-label">OT (Hours)</label>
-                            <input type="text" class="form-control" id="" placeholder="">
-                        </div>
-                        <div class="form-group row mb-2">
-                            <label for="" class="form-label">Time Period</label>
-                            <input type="text" class="form-control" id="" placeholder="">
-                        </div>*@
+            <label for="" class="form-label">SR ID</label>
+            <input type="text" class="form-control" id="" placeholder="">
+        </div>
+        <div class="form-group row mb-2">
+            <label for="" class="form-label">Child SR ID</label>
+            <input type="text" class="form-control" id="" placeholder="">
+        </div>
+        <div class="form-group row mb-2">
+            <label for="" class="form-label">Test Purpose</label>
+            <input type="text" class="form-control" id="" placeholder="">
+        </div>
+        <div class="form-group row mb-2">
+            <label for="" class="form-label">Vintage</label>
+            <input type="text" class="form-control" id="" placeholder="">
+        </div>
+        <div class="form-group row mb-2">
+            <label for="" class="form-label">Title</label>
+            <input type="text" class="form-control" id="" placeholder="">
+        </div>
+        <div class="form-group row mb-2">
+            <label for="" class="form-label">Remarks</label>
+            <input type="text" class="form-control" id="" placeholder="">
+        </div>
+        <div class="form-group row mb-2">
+            <label for="" class="form-label">Station</label>
+            <input type="text" class="form-control" id="" placeholder="">
+        </div>
+        <div class="form-group row mb-2">
+            <label for="" class="form-label">Technician</label>
+            <input type="text" class="form-control" id="" placeholder="">
+        </div>
+        <div class="form-group row mb-2">
+            <label for="" class="form-label">Status</label>
+            <input type="text" class="form-control" id="" placeholder="">
+        </div>
+        <div class="form-group row mb-2">
+            <label for="" class="form-label">Category</label>
+            <input type="text" class="form-control" id="" placeholder="">
+        </div>
+        <div class="form-group row mb-2">
+            <label for="" class="form-label">Event Color</label>
+            <input type="text" class="form-control" id="" placeholder="">
+        </div>
+        <div class="form-group row mb-2">
+            <label for="" class="form-label">Color</label>
+            <input type="text" class="form-control" id="" placeholder="">
+        </div>
+        <div class="form-group row mb-2">
+            <label for="" class="form-label">Number of Days</label>
+            <input type="text" class="form-control" id="" placeholder="">
+        </div>
+        <div class="form-group row mb-2">
+            <label for="" class="form-label">0.5 Days</label>
+            <input type="text" class="form-control" id="" placeholder="">
+        </div>
+        <div class="form-group row mb-2">
+            <label for="" class="form-label">Exclude</label>
+            <input type="text" class="form-control" id="" placeholder="">
+        </div>
+        <div class="form-group row mb-2">
+            <label for="" class="form-label">Report Release Duration</label>
+            <input type="text" class="form-control" id="" placeholder="">
+        </div>
+        <div class="form-group row mb-2">
+            <label for="" class="form-label">Note</label>
+            <input type="text" class="form-control" id="" placeholder="">
+        </div>
+        <div class="form-group row mb-2">
+            <label for="" class="form-label">OT (Hours)</label>
+            <input type="text" class="form-control" id="" placeholder="">
+        </div>
+        <div class="form-group row mb-2">
+            <label for="" class="form-label">Time Period</label>
+            <input type="text" class="form-control" id="" placeholder="">
+        </div>*@
 
                     @*<div class="form-group row mb-2">
-                            <label for="station" class="form-label">Station</label>
-                            <input type="text" class="form-control" id="station" placeholder="Station A">
-                        </div>
-                        <div class="form-group row mb-2">
-                            <label for="start_date" class="form-label">Start Date</label>
-                            <input type="text" class="form-control" id="start_date" placeholder="21 July 2022">
-                        </div>
-                        <div class="form-group row mb-2">
-                            <label for="end_date" class="form-label">End Date</label>
-                            <input type="text" class="form-control" id="end_date" placeholder="27 July 2022">
-                        </div>*@
+            <label for="station" class="form-label">Station</label>
+            <input type="text" class="form-control" id="station" placeholder="Station A">
+        </div>
+        <div class="form-group row mb-2">
+            <label for="start_date" class="form-label">Start Date</label>
+            <input type="text" class="form-control" id="start_date" placeholder="21 July 2022">
+        </div>
+        <div class="form-group row mb-2">
+            <label for="end_date" class="form-label">End Date</label>
+            <input type="text" class="form-control" id="end_date" placeholder="27 July 2022">
+        </div>*@
                 </form>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-light me-auto">Find Slot</button>
                 <button type="button" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-secondary" onclick="btnBack()">Back</button>
+                @*<button type="button" class="btn btn-secondary" onclick="btnBack()">Back</button>*@
                 <button type="button" class="btn btn-danger" onclick="btnDelete()">Delete</button>
             </div>
         </div>

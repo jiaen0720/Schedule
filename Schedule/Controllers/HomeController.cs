@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Schedule.Context;
+using Schedule.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +10,11 @@ namespace Schedule.Controllers
 {
     public class HomeController : Controller
     {
+        DBContext db = new DBContext();
+
         public ActionResult Index()
         {
-            return View();
+            return View(db.DBs.ToList());
         }
 
         public ActionResult About()

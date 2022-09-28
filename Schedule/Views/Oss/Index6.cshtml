@@ -1,0 +1,293 @@
+﻿
+@{
+    ViewBag.Title = "Index6";
+}
+
+<style>
+    .timeline_weekend {
+        background-color: #FFF9C4;
+    }
+</style>
+
+<button type="button" class="btn btn-secondary" onclick="btnDelete()">Lock completed schedule</button>
+
+<br />
+<br />
+
+<div id="scheduler_here" class="dhx_cal_container shadow rounded-3" style='width:100%; height:100vh;'>
+    <div class="dhx_cal_navline">
+        <div class="dhx_cal_prev_button">&nbsp;</div>
+        <div class="dhx_cal_next_button">&nbsp;</div>
+        <div class="dhx_cal_today_button"></div>
+        <div class="dhx_cal_date"></div>
+        @*<div class="dhx_cal_tab" name="timeline_tab"></div>
+            <div class="dhx_cal_tab" name="day_tab"></div>
+            <div class="dhx_cal_tab" name="week_tab"></div>
+            <div class="dhx_cal_tab" name="month_tab"></div>*@
+    </div>
+    <div class="dhx_cal_header"></div>
+    <div class="dhx_cal_data"></div>
+</div>
+
+@*<div id="gantt_here" style='width:1000px; height:400px;'></div>*@
+
+
+@section scripts{
+    @*<link rel="stylesheet" type="text/css" href="https://cdn.dhtmlx.com/scheduler/edge/dhtmlxscheduler_material.css" />
+        <script src="https://cdn.dhtmlx.com/scheduler/edge/dhtmlxscheduler.js"></script>
+
+        <script src="~/Content/codebase/sources/dhtmlxgantt.js"></script>
+        <link href="~/Content/codebase/sources/dhtmlxgantt.css" rel="stylesheet" />*@
+
+    @*<script src="~/Content/codebase/dhtmlxgantt.js"></script>
+        <link href="~/Content/codebase/dhtmlxgantt.css" rel="stylesheet" />*@
+
+    @*<link href="~/Content/codebase/dhtmlxscheduler.css" rel="stylesheet" />
+        <script src="~/Content/codebase/dhtmlxscheduler.js"></script>*@
+
+
+    <link href="~/Content/gantt_7.1.10_commercial/gantt_7.1.10_commercial/codebase/dhtmlxgantt.css" rel="stylesheet" />
+    <script src="~/Content/gantt_7.1.10_commercial/gantt_7.1.10_commercial/codebase/dhtmlxgantt.js"></script>
+
+    <script>
+        //===============
+        //Configuration
+        //===============
+        var sections = [
+            { key: 1, label: "001. ANALOG 086 - 1" },
+            { key: 2, label: "002. ANALOG 086 - 2" },
+            { key: 3, label: "003. ANALOG 086 - 3" },
+            { key: 4, label: "004. ANALOG 086 - 4" },
+            { key: 5, label: "005. ANALOG 086 - 5" },
+            { key: 6, label: "006. ANALOG 086 - 6" },
+            { key: 7, label: "007. ANALOG 086 - 7" },
+            { key: 8, label: "008. ANALOG 086 - 8" },
+            { key: 9, label: "009. ANALOG 086 - 9" },
+            { key: 10, label: "010. ANALOG 086 - 10" },
+        ];
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+            //extension for dhtmlx
+            scheduler.plugins({
+                timeline: true,
+                limit: true, //for setting the weekend background color
+                tooltip: true, //tooltips
+                //    minical: true, //mini calendar
+            });
+
+            //'timeline_tab' is the name of our div
+            scheduler.locale.labels.timeline_tab = "Timeline";
+
+            scheduler.createTimelineView({
+                name: "timeline",
+                x_unit: "hour", // measuring unit of the X-Axis.
+                x_date: "%H",  // date format of the X-Axis
+                x_step: 12,        // X-Axis step in 'x_unit's; slot duration, each slot has 1 day
+                x_size: 60,       // X-Axis length specified as the total number of 'x_step's
+                x_start: 00,      // X-Axis offset in 'x_unit's
+                x_length: 60,     // number of 'x_step's that will be scrolled at a time; questioning, nit really understand
+                y_unit: sections, // sections of the view (titles of Y-Axis)
+                y_property: "section_id",   // mapped data property
+                resize_events: true,
+                fit_events: true,
+                event_dy: "full", //the height of the event cell
+
+                render: "bar",             // view mode
+                dy: 60, // height for every rows
+                dx: 150, // width for 1st column on left hand side(Station Name)
+                second_scale: {
+                    x_unit: "day", // the measuring unit of the axis (by default, 'minute')
+                    x_date: "%D" //the date format of the axis ("Mon")
+                },
+                round_position: false, // bar plot according time duration, will not plot whole cell is set to false
+            });
+
+            var date = new Date();
+            scheduler.init('scheduler_here', new Date(date.getFullYear(), date.getMonth(), 1), 'timeline');
+            scheduler.parse([
+                {
+                    text: "Conference", start_date: "17/09/2022 12:00", end_date: "18/09/2022 21:00",
+                    room_id: "1"
+                },
+                {
+                    text: "Meeting", start_date: "17/09/2022 09:00", end_date: "17/09/2022 21:00",
+                    room_id: "2"
+                },
+                {
+                    text: "Conference", start_date: "17/09/2022 15:00", end_date: "18/09/2022 15:00",
+                    room_id: "3"
+                }
+            ]);
+
+            //display the weekend background color
+            scheduler.addMarkedTimespan({
+                days: [0, 6], //0 = sunday, 6 = saturday
+                zones: "fullday",
+                css: "timeline_weekend" //css class
+            });
+
+            //tooltips
+            scheduler.templates.tooltip_text = function (start, end, event) {
+                var startDate = start;
+                var endDate = end;
+
+                const diffTime = Math.abs(endDate - startDate);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                var html = [];
+                //html.push("Title: <b>" + event.text + "</b>");
+                //html.push("Check-in: <b>" + start + "</b>");
+                //html.push("Check-out: <b>" + end + "</b>");
+
+                //html.push("<b>Technician: </b>" + "34504" + "</br>");
+                //html.push("<b>Number of Shifts: </b>" + "34504" + "</br>");
+                //html.push("<b>Exclude: </b>" + "34504" + "</br>");
+
+                var x = "<b>SR ID: </b>" + "34180" + "</br>" +
+                    "<b>Child SR ID: </b>" + "34180-RF-00002" + "</br>" +
+                    "<b>Test Purpose: </b>" + "Engineering Evaluation" + "</br>" +
+                    "<b>Title: </b>" + "NILE VHF 136-174M 5W" + "<br/>" +
+                    "<b>Test Station: </b>" + "009. SIGNAL 219 - 2" + "<br/>" +
+                    "<b>Remarks: </b>" + "NPI Program." + "<br/>" +
+                    "<b>Technician: </b>" + "Brand" + "<br/>" +
+                    "<b>Number of Shifts : </b>" + diffDays + "<br/>" +
+                    "<b>Exclude: </b> " + "" + "<br/>";
+                html.push(x);
+
+                return html.join("<br>")
+            };
+
+            //display the event contain
+
+
+            //inner content of the event
+            //scheduler.templates.event_bar_text = function (start, end, event) {
+            //    //    return "Hello World" + event.text;
+            //    return "event_" + (event.status || "");
+            //};
+
+            scheduler.templates.event_bar_text = function (start, end, event) {
+                //var paidStatus = getPaidStatus(event.is_paid);
+                //var startDate = eventDateFormat(event.start_date);
+                //var endDate = eventDateFormat(event.end_date);
+
+                var startDate = start;
+                var endDate = end;
+
+                const diffTime = Math.abs(endDate - startDate);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                //    return [event.text + "<br />" + diffDays + "Days"].join("");
+                return ["[34504] - BORMIR 3" + "<br />" + diffDays + "Days"].join("");
+
+            };
+
+            //disable resize
+            //scheduler.config.drag_resize = false;
+
+            //disable draggable
+            scheduler.config.drag_move = false;
+            scheduler.config.drag_create = false;
+
+            //popup modal
+            //scheduler.config.lightbox.sections = [
+            //    { name: "OS ID", height: "100%", map_to: "os_id", type: "template" },
+            //    { name: "SR ID", height: "100%", map_to: "sr_id", type: "textarea", focus: true },
+            //    { name: "Child SR ID", height: "100%", map_to: "child_sr_id", type: "textarea" },
+            //    //{ name: "Test Purpose", height: "100%", type: "select", options: testPurposeList, map_to: "test_purpose" },
+            //    { name: "Vintage", height: "100%", type: "textarea", map_to: "vintage" },
+            //    { name: "Title", height: "100%", map_to: "title", type: "textarea" },
+
+            //    { name: "Remarks", height: "100%", map_to: "description", type: "textarea" },
+            //    //{ name: "Station <span style='color:red;'>*</span>", height: "100%", type: "select", options: sections, map_to: "station_id" },
+            //    //{ name: "Technician", height: "100%", type: "select", options: technicianList, map_to: "CID" },
+            //    //{ name: "Status", height: "100%", type: "combo", image_path: "dhtmlxLibrary/imgs/", options: statusList, map_to: "status", onchange: fnjOnchangeStatus },
+            //    //{ name: "Category", height: "100%", type: "select", options: categoryList, map_to: "category" },
+            //    //{ name: "Event Color", height: "100%", type: "combo", image_path: "dhtmlxLibrary/imgs/", options: colorList, map_to: "event_color" },
+            //    { name: "Color", height: "100%", map_to: "color", type: "template" },
+            //    { name: "Number of Days", height: "100%", map_to: "test_cycle_time", type: "textarea" },
+            //    //{ name: "0.5 Day", height: "100%", type: "select", options: halfshiftList, map_to: "HalfShift" },
+            //    //{ name: "Exclude", height: "100%", map_to: "exclude_value", type: "multiselect", options: excludeList, vertical: "false" },
+            //    { name: "Report Release Duration", height: "100%", map_to: "days_for_report_release", type: "textarea" },
+            //    { name: "Note", height: "100%", type: "template", map_to: "my_noted" },
+            //    { name: "OT (Hours)", height: "100%", map_to: "ot_hours", type: "textarea" },
+            //    { name: "time", height: "100%", type: "calendar_time", map_to: "auto" }
+            //];
+
+            //machine downtime
+            scheduler.templates.timeline_cell_class = function (evs, date, section) {
+
+                sCurrentDayDate = ("0" + (date.getMonth() + 1)).slice(-2) + "/" + ("0" + date.getDate()).slice(-2) + "/" + date.getFullYear();
+
+                // Color & background image on Station Downtime
+                //if (DownTimeData != "" && DownTimeData != null) {
+
+                //    for (i = 0; i < DownTimeData.length; i++) {
+                //        today = new Date(sCurrentDayDate);
+                //        dtStation_id = DownTimeData[i].station_id;
+                //        dtStart = new Date(DownTimeData[i].start);
+                //        dtEnd = new Date(DownTimeData[i].end);
+
+                //        if (today >= dtStart && today <= dtEnd) {
+                //            //var a = JSON.stringify(section.key);
+                //            if (dtStation_id == section.key) {
+                //                i = DownTimeData.length;
+                //                return "downTime_section";
+                //            }
+                //        }
+                //    }
+                //}
+
+                // Color & background image on Public Holiday
+                //if (PhData != "" && PhData != null) {
+                //    for (i = 0; i < PhData.length; i++) {
+                //        today = new Date(sCurrentDayDate);
+                //        phName = PhData[i].name;
+                //        phStart = new Date(PhData[i].start);
+                //        phEnd = new Date(PhData[i].end);
+
+                //        if (today >= phStart && today <= phEnd) {
+                //            i = PhData.length;
+                //            return "holiday_section";
+                //        }
+                //    }
+                //}
+            };
+
+            scheduler.templates.timeline_scale_date = function (datetime) {
+                // Doing Label to define Shift instant of TIME
+                var i = Math.round(datetime.getHours() / 12);
+                return i + parseInt(1);
+            }
+        });
+
+        scheduler.templates.tooltip_text = function (start, end, event) {
+            sExtra = "<b>Technician: </b>" + fnjOSSEmptyDataReturn(fnjGetTechnicianNameByID(event.CID)) + "<br/>" +
+                "<b>Number of Shifts : </b>" + fnjOSSEmptyDataReturn(event.test_cycle_time) + "<br/>" +
+                "<b>Exclude: </b> " + fnjOSSEmptyDataReturn(event.exclude_value) + "<br/>";
+
+            var format = scheduler.date.date_to_str("%Y-%m-%d %H:%i");
+            fnjGetTestPurposeByChildSR(event.os_id, event.child_sr_id);
+
+            var sTestPurposeTemp = event.test_purpose;
+            if (document.getElementById("TestPurposeTemp")) {
+                if (document.getElementById("TestPurposeTemp").innerHTML != "")
+                    sTestPurposeTemp = document.getElementById("TestPurposeTemp").innerHTML;
+            }
+
+            return "<b>SR ID: </b>" + fnjOSSEmptyDataReturn(event.sr_id) + "</br>" +
+                "<b>Child SR ID: </b>" + fnjOSSEmptyDataReturn(event.child_sr_id) + "</br>" +
+                "<b>Test Purpose: </b>" + fnjOSSEmptyDataReturn(fnjGetTestPurposeNameByID(sTestPurposeTemp)) + "</br>" +
+                "<b>Title: </b>" + fnjOSSEmptyDataReturn(event.title) + "<br/>" +
+                "<b>Test Station: </b>" + fnjOSSEmptyDataReturn(event.StationName) + "<br/>" +
+                "<b>Remarks: </b>" + fnjOSSEmptyDataReturn(event.description) + "<br/>" +
+                sExtra;
+        };
+
+        function isContains() {
+            $(".dhx_scale_bar ").text(function () {
+                return $(this).text().replace("00", "1").replace("12", "2");
+            });
+        }
+    </script>
+}

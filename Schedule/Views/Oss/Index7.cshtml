@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Index7";
+}
+
+<div id="gantt_here" style='width:1000px; height:400px;'></div>
+
+@section scripts{
+
+    <link href="~/Content/gantt_7.1.10_commercial/gantt_7.1.10_commercial/codebase/dhtmlxgantt.css" rel="stylesheet" />
+    <script src="~/Content/gantt_7.1.10_commercial/gantt_7.1.10_commercial/codebase/dhtmlxgantt.js"></script>
+
+    <script>
+        gantt.init("gantt_here");
+    </script>
+}
